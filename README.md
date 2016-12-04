@@ -42,6 +42,6 @@ mcs -sdk:4.5 ITP1_1_A__Hello_World__C#__.cs
 mono ITP1_1_A__Hello_World__C#__.exe
 rm ITP1_1_A__Hello_World__C#__.exe
 
-echo "=== JavaScript(node.ja) ==="
+echo "=== JavaScript(node.js) ==="
 node ITP1_1_A__Hello_World__JavaScript__.js
 ```
