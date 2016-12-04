@@ -1,13 +1,5 @@
-# AOJ
+#!/bin/bash -ue
 
-[AOJ](http://judge.u-aizu.ac.jp/onlinejudge/index.jsp)のソースコードを書いてみる
-
-## 各種言語のコンパイル実行例(Cent OS 7)
-
-「ITP1_1_A__Hello_World」を例にして、各言語のコンパイルと実行例を記載します。
-サンプル：Introduction_to_Programming/compile_sample.sh
-
-```Bash
 echo "=== C言語 ==="
 gcc ITP1_1_A__Hello_World__C__.c
 ./a.out
@@ -44,4 +36,5 @@ rm ITP1_1_A__Hello_World__C#__.exe
 
 echo "=== JavaScript(node.ja) ==="
 node ITP1_1_A__Hello_World__JavaScript__.js
-```
+
+
