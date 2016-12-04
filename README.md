@@ -1,11 +1,11 @@
 # AOJ
 
-[AOJ](http://judge.u-aizu.ac.jp/onlinejudge/index.jsp)のソースコードを書いてみる
+[AOJ](http://judge.u-aizu.ac.jp/onlinejudge/index.jsp)のソースコードを書いてみる  
 
 ## 各種言語のコンパイル実行例(Cent OS 7)
 
-「ITP1_1_A__Hello_World」を例にして、各言語のコンパイルと実行例を記載します。
-サンプル：Introduction_to_Programming/compile_sample.sh
+「ITP1_1_A__Hello_World」を例にして、各言語のコンパイルと実行例を記載します。  
+サンプル：Introduction_to_Programming/compile_sample.sh  
 
 ```Bash
 echo "=== C言語 ==="
