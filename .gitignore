@@ -27,4 +27,6 @@
 *.exe
 *.out
 *.app
-a.out
+*.class
+*.out
+*.exe
