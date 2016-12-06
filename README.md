@@ -4,44 +4,44 @@
 
 ## 各種言語のコンパイル実行例(Cent OS 7)
 
-「ITP1_1_A__Hello_World」を例にして、各言語のコンパイルと実行例を記載します。  
-サンプル：Introduction_to_Programming/compile_sample.sh  
+各言語のコンパイルと実行例を記載します。  
+サンプル：compile_sample.sh  
 
 ```Bash
 echo "=== C言語 ==="
-gcc ITP1_1_A__Hello_World__C__.c
+gcc Main.c
 ./a.out
 rm a.out
 
 echo "=== C++ ==="
-g++ ITP1_1_A__Hello_World__C++__.cpp
+g++ Main.cpp
 ./a.out
 rm a.out
 
 echo "=== D ==="
-dmd ITP1_1_A__Hello_World__D__.d
-./ITP1_1_A__Hello_World__D__
-rm ITP1_1_A__Hello_World__D__.o ITP1_1_A__Hello_World__D__
+dmd Main.d
+./Main
+rm Main Main.o
 
 echo "=== Ruby ==="
-ruby ITP1_1_A__Hello_World__Ruby__.rb
+ruby Main.rb
 
 echo "=== Perl ==="
-perl ITP1_1_A__Hello_World__Perl__.pl
+perl Main.pl
 
 echo "=== Python ==="
-python ITP1_1_A__Hello_World__Python3__.py
+python Main.py
 
 echo "=== Java ==="
-javac ITP1_1_A__Hello_World__JAVA__.java
+javac Main.java
 java Main
 rm Main.class
 
 echo "=== C# ==="
-mcs -sdk:4.5 ITP1_1_A__Hello_World__C#__.cs
-mono ITP1_1_A__Hello_World__C#__.exe
-rm ITP1_1_A__Hello_World__C#__.exe
+mcs -sdk:4.5 Main.cs
+mono Main.exe
+rm Main.exe
 
 echo "=== JavaScript(node.js) ==="
-node ITP1_1_A__Hello_World__JavaScript__.js
+node Main.js
 ```
