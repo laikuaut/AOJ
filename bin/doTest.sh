@@ -1,5 +1,10 @@
 #!/bin/bash -u
 
+# このシェルスクリプトが配置してあるディレクトリ
+SCRIPT_DIR=$(cd $(dirname ${0}); pwd)
+# モジュール群を読み込み
+source ${SCRIPT_DIR}/modules.sh
+
 DIR_NAME=${1}
 Q_NAME=$(basename $DIR_NAME)
 

@@ -1,6 +1,8 @@
 #!/bin/bash -ue
 
+# このシェルスクリプトが配置してあるディレクトリ
 SCRIPT_DIR=$(cd $(dirname ${0}); pwd)
+# モジュール群を読み込み
 source ${SCRIPT_DIR}/modules.sh
 
 # 引数(後でオプション化)
