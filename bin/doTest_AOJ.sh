@@ -3,7 +3,7 @@
 # このシェルスクリプトが配置してあるディレクトリ
 SCRIPT_DIR=$(cd $(dirname ${0}); pwd)
 # モジュール群を読み込み
-source ${SCRIPT_DIR}/modules.sh
+source ${SCRIPT_DIR}/AOJ_modules.sh
 
 if [[ $# != 1 ]];then
     echo "ディレクトリを指定してください。"

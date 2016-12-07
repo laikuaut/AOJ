@@ -5,7 +5,7 @@ SCRIPT_DIR=$(cd $(dirname ${0}); pwd)
 # 実行カレントディレクトリ
 CURRENT_DIR=`pwd`
 # モジュール群を読み込み
-source ${SCRIPT_DIR}/modules.sh
+source ${SCRIPT_DIR}/AOJ_modules.sh
 
 # Usage
 function Usage() {
