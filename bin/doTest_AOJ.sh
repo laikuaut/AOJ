@@ -5,6 +5,10 @@ SCRIPT_DIR=$(cd $(dirname ${0}); pwd)
 # モジュール群を読み込み
 source ${SCRIPT_DIR}/modules.sh
 
+if [[ $# != 1 ]];then
+    echo "ディレクトリを指定してください。"
+    exit 1
+fi
 DIR_NAME=${1}
 Q_NAME=$(basename $DIR_NAME)
 TEST_DATA_DIR=test_data
