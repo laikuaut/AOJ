@@ -2,15 +2,18 @@
 
 # このシェルスクリプトが配置してあるディレクトリ
 SCRIPT_DIR=$(cd $(dirname ${0}); pwd)
+# 実行カレントディレクトリ
+CURRENT_DIR=`pwd`
 # モジュール群を読み込み
 source ${SCRIPT_DIR}/modules.sh
 
 # Usage
 function Usage() {
     echo $@
+    echo
     cat << __END__
 Usage:
-  `basename $0` [-i input_file] [-o output_file] [-h] dir_path [languages ...]
+  `basename $0` [-i input_file] [-o output_prefix] [-h] dir_path [languages ...]
 
 Description:
   dir_path  : 実行ディレクトリパス
@@ -18,41 +21,59 @@ Description:
               対応言語 : ${LANGUAGES[@]}
 
 Options:
-  -i input_file  : 入力ファイル
-  -o output_file : 出力ファイル
+  -i input_file    : 入力ファイル
+  -o output_prefix : 出力ファイルのprefix指定
   -h ヘルプ表示
 
 __END__
+
+    exit 1
 }
 
 # オプション解析
-while getopts ":i:o:h" OPT
+while getopts ":i:oh" OPT
 do
     case "${OPT}" in
-        i)  OPT_FLAG_i=1; OPT_VALUE_i=${OPTARG} ;;
-        o)  OPT_FLAG_o=1; OPT_VALUE_o=${OPTARG} ;;
+        i)  OPT_VALUE_i=${OPTARG} ;;
+        o)  OPT_VALUE_o=${OPTARG} ;;
         h)  Usage "[Help]" ;;
         :)  echo "[ERROR] Option argument is undefined." ;;
         \?) echo "[ERROR] Undefined options." ;;
-        *)
-            echo "${name} Didn't match anything" ;;
+        *)  echo "${name} Didn't match anything" ;;
     esac
 done
 
 # getopts分の引数値移動
 shift $(($OPTIND - 1))
 
+# 入力ファイル
+if [ -v OPT_VALUE_i ];then
+    input_file=${OPT_VALUE_i}
+else
+    # Ctrl+Dで入力終了
+    input_file=${CURRENT_DIR}/data/tmp_in
+    echo "入力待ち(Ctrl+Dで終了)"
+    cat /dev/stdin > ${input_file}
+fi
+# ファイルの存在確認
+if [ ! -f ${input_file} ];then
+    Usage "入力ファイルがありません。"
+fi
 
 # 引数(後でオプション化)
 if [[ $# < 1 ]];then
-    echo "引数不足、実行ディレクトリを指定してください。"
-    echo "compile_sample.sh dir_name [languages ...]"
-    echo "対応言語 : ${LANGUAGES[@]}"
-    exit 1
+    Usage "引数不足、実行ディレクトリを指定してください。"
 fi
 
 # 実行ディレクトリ
 dir_name=${1}; shift;
+
+# 出力ファイル
+if [ -v OPT_VALUE_o ];then
+    output_prefix=${OPT_VALUE_o}
+else
+    output_prefix=${CURRENT_DIR}/data/$(basename ${dir_name})_out
+fi
 
 # 言語取得
 if [[ $# > 0 ]];then
@@ -63,6 +84,7 @@ fi
 
 pushd ${dir_name}
 
+# 対応言語確認
 for in_lang in ${languages[@]}
 do
     ng_lang=true
@@ -73,20 +95,22 @@ do
         fi
     done
     if [ $ng_lang = true ];then
-        echo "未対応の言語が含まれています。"
-        echo "対応言語 : ${LANGUAGES[@]}"
-        exit 1
+        Usage "未対応の言語が含まれています。"
     fi
+done
 
-    if [ "${in_lang}" = "C"          ];then run_C; fi
-    if [ "${in_lang}" = "C++"        ];then run_CPP; fi
-    if [ "${in_lang}" = "D"          ];then run_D; fi
-    if [ "${in_lang}" = "Ruby"       ];then run_Ruby; fi
-    if [ "${in_lang}" = "Perl"       ];then run_Perl; fi
-    if [ "${in_lang}" = "Python"     ];then run_Python; fi
-    if [ "${in_lang}" = "Java"       ];then run_Java; fi
-    if [ "${in_lang}" = "C#"         ];then run_CS; fi
-    if [ "${in_lang}" = "JavaScript" ];then run_JS; fi
+# 言語ごとの実行開始
+for in_lang in ${languages[@]}
+do
+    if [ "${in_lang}" = "${LANGUAGE_NAME_C}"      ];then run_C      < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_C}.txt     ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_CPP}"    ];then run_CPP    < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_CPP}.txt   ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_D}"      ];then run_D      < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_D}.txt     ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_Ruby}"   ];then run_Ruby   < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_Ruby}.txt  ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_Perl}"   ];then run_Perl   < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_Perl}.txt  ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_Python}" ];then run_Python < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_Python}.txt; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_Java}"   ];then run_Java   < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_Java}.txt  ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_CS}"     ];then run_CS     < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_CS}.txt    ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_JS}"     ];then run_JS     < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_JS}.txt    ; fi
 done
 
 popd
