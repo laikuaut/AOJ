@@ -5,6 +5,44 @@ SCRIPT_DIR=$(cd $(dirname ${0}); pwd)
 # モジュール群を読み込み
 source ${SCRIPT_DIR}/modules.sh
 
+# Usage
+function Usage() {
+    echo $@
+    cat << __END__
+Usage:
+  `basename $0` [-i input_file] [-o output_file] [-h] dir_path [languages ...]
+
+Description:
+  dir_path  : 実行ディレクトリパス
+  languages : 実行言語名
+              対応言語 : ${LANGUAGES[@]}
+
+Options:
+  -i input_file  : 入力ファイル
+  -o output_file : 出力ファイル
+  -h ヘルプ表示
+
+__END__
+}
+
+# オプション解析
+while getopts ":i:o:h" OPT
+do
+    case "${OPT}" in
+        i)  OPT_FLAG_i=1; OPT_VALUE_i=${OPTARG} ;;
+        o)  OPT_FLAG_o=1; OPT_VALUE_o=${OPTARG} ;;
+        h)  Usage "[Help]" ;;
+        :)  echo "[ERROR] Option argument is undefined."
+        \?) echo "[ERROR] Undefined options.";;
+        *)
+            echo "${name} Didn't match anything"
+    esac
+done
+
+# getopts分の引数値移動
+shift $(($OPTIND - 1))
+
+
 # 引数(後でオプション化)
 if [[ $# < 1 ]];then
     echo "引数不足、実行ディレクトリを指定してください。"
