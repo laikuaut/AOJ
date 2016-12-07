@@ -32,10 +32,10 @@ do
         i)  OPT_FLAG_i=1; OPT_VALUE_i=${OPTARG} ;;
         o)  OPT_FLAG_o=1; OPT_VALUE_o=${OPTARG} ;;
         h)  Usage "[Help]" ;;
-        :)  echo "[ERROR] Option argument is undefined."
-        \?) echo "[ERROR] Undefined options.";;
+        :)  echo "[ERROR] Option argument is undefined." ;;
+        \?) echo "[ERROR] Undefined options." ;;
         *)
-            echo "${name} Didn't match anything"
+            echo "${name} Didn't match anything" ;;
     esac
 done
 
