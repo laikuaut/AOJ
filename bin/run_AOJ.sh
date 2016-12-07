@@ -31,7 +31,7 @@ __END__
 }
 
 # オプション解析
-while getopts ":i:oh" OPT
+while getopts ":i:o:h" OPT
 do
     case "${OPT}" in
         i)  OPT_VALUE_i=${OPTARG} ;;
@@ -48,10 +48,11 @@ shift $(($OPTIND - 1))
 
 # 入力ファイル
 if [ -v OPT_VALUE_i ];then
-    input_file=${OPT_VALUE_i}
+    input_file=$(get_abspath_from_current "${OPT_VALUE_i}")
 else
     # Ctrl+Dで入力終了
-    input_file=${CURRENT_DIR}/data/tmp_in
+    input_file=${CURRENT_DIR}/result_data/tmp_in
+    mkdir $(dirname ${input_file}) -p
     echo "入力待ち(Ctrl+Dで終了)"
     cat /dev/stdin > ${input_file}
 fi
@@ -70,10 +71,11 @@ dir_name=${1}; shift;
 
 # 出力ファイル
 if [ -v OPT_VALUE_o ];then
-    output_prefix=${OPT_VALUE_o}
+    output_prefix=$(get_abspath_from_current "${OPT_VALUE_o}")
 else
-    output_prefix=${CURRENT_DIR}/data/$(basename ${dir_name})_out
+    output_prefix=${CURRENT_DIR}/result_data/$(basename ${dir_name})_out
 fi
+mkdir $(dirname ${output_prefix}) -p
 
 # 言語取得
 if [[ $# > 0 ]];then
@@ -114,4 +116,8 @@ do
 done
 
 popd
+
+# 後処理
+tmp_file=${CURRENT_DIR}/result_data/tmp_in
+if [ -f ${tmp_file} ];then rm ${tmp_file}; fi
 
