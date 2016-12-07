@@ -49,6 +49,10 @@ do
     # プログラム実行と差分確認
     echo "[START] ${Q_NAME} ${TEST_DATA_DIR}/${Q_NAME}_${num}_in.txt"
     ${SCRIPT_DIR}/run_AOJ.sh -i ${TEST_DATA_DIR}/${Q_NAME}_${num}_in.txt -o ${RESULT_DATA_DIR}/${Q_NAME}_${num}_out ${DIR_NAME} >& /dev/null
+    echo ${RESULT_DATA_DIR}/${Q_NAME}_${num}_out_*.txt | \
+        sed -E "s#${RESULT_DATA_DIR}/${Q_NAME}_${num}_out_##g" | \
+        sed -E "s#.txt##g" | \
+        sed -E "s# #, #g"
     for result_file in ${RESULT_DATA_DIR}/${Q_NAME}_${num}_out_*.txt
     do
         result=$(diff ${result_file} ${TEST_DATA_DIR}/${Q_NAME}_${num}_out.txt)

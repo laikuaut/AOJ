@@ -38,9 +38,9 @@ ${LANGUAGE_NAME_JS}
 function run_C() {
     echo "=== ${LANGUAGE_NAME_C} ===" >&2
     local src=Main.${LANGUAGE_EX_C}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
-    gcc ${src}
-    ./a.out < /dev/stdin
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
+    gcc ${src} -lm
+    ./a.out < /dev/stdin | tee ${1}
     rm a.out
     return 0;
 }
@@ -49,9 +49,9 @@ function run_C() {
 function run_CPP() {
     echo "=== ${LANGUAGE_NAME_CPP} ===" >&2
     local src=Main.${LANGUAGE_EX_CPP}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
     g++ ${src}
-    ./a.out < /dev/stdin
+    ./a.out < /dev/stdin | tee ${1}
     rm a.out
     return 0;
 }
@@ -60,9 +60,9 @@ function run_CPP() {
 function run_D() {
     echo "=== ${LANGUAGE_NAME_D} ===" >&2
     local src=Main.${LANGUAGE_EX_D}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
     dmd ${src}
-    ./Main < /dev/stdin
+    ./Main < /dev/stdin | tee ${1}
     rm Main Main.o
     return 0;
 }
@@ -71,8 +71,8 @@ function run_D() {
 function run_Ruby() {
     echo "=== ${LANGUAGE_NAME_Ruby} ===" >&2
     local src=Main.${LANGUAGE_EX_Ruby}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
-    ruby ${src} < /dev/stdin
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
+    ruby ${src} < /dev/stdin | tee ${1}
     return 0;
 }
 
@@ -80,8 +80,8 @@ function run_Ruby() {
 function run_Perl() {
     echo "=== ${LANGUAGE_NAME_Perl} ===" >&2
     local src=Main.${LANGUAGE_EX_Perl}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
-    perl ${src} < /dev/stdin
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
+    perl ${src} < /dev/stdin | tee ${1}
     return 0;
 }
 
@@ -89,8 +89,8 @@ function run_Perl() {
 function run_Python() {
     echo "=== ${LANGUAGE_NAME_Python} ===" >&2
     local src=Main.${LANGUAGE_EX_Python}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
-    python ${src} < /dev/stdin
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
+    python ${src} < /dev/stdin | tee ${1}
     return 0;
 }
 
@@ -98,9 +98,9 @@ function run_Python() {
 function run_Java() {
     echo "=== ${LANGUAGE_NAME_Java} ===" >&2
     local src=Main.${LANGUAGE_EX_Java}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
-    javac ${src} < /dev/stdin
-    java Main
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
+    javac ${src}
+    java Main < /dev/stdin | tee ${1}
     rm Main.class
     return 0;
 }
@@ -109,9 +109,9 @@ function run_Java() {
 function run_CS() {
     echo "=== ${LANGUAGE_NAME_CS} ===" >&2
     local src=Main.${LANGUAGE_EX_CS}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
     mcs -sdk:4.5 ${src}
-    mono Main.exe < /dev/stdin
+    mono Main.exe < /dev/stdin | tee ${1}
     rm Main.exe
     return 0;
 }
@@ -120,8 +120,8 @@ function run_CS() {
 function run_JS() {
     echo "=== ${LANGUAGE_NAME_JS} ===" >&2
     local src=Main.${LANGUAGE_EX_JS}
-    if [ ! -e ${src} ];then echo "ファイルがありません。"; return 0;fi
-    node ${src} < /dev/stdin
+    if [ ! -e ${src} ];then echo "ファイルがありません。" >&2; return 0;fi
+    node ${src} < /dev/stdin | tee ${1}
     return 0;
 }
 

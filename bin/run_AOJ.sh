@@ -104,15 +104,15 @@ done
 # 言語ごとの実行開始
 for in_lang in ${languages[@]}
 do
-    if [ "${in_lang}" = "${LANGUAGE_NAME_C}"      ];then run_C      < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_C}.txt     ; fi
-    if [ "${in_lang}" = "${LANGUAGE_NAME_CPP}"    ];then run_CPP    < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_CPP}.txt   ; fi
-    if [ "${in_lang}" = "${LANGUAGE_NAME_D}"      ];then run_D      < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_D}.txt     ; fi
-    if [ "${in_lang}" = "${LANGUAGE_NAME_Ruby}"   ];then run_Ruby   < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_Ruby}.txt  ; fi
-    if [ "${in_lang}" = "${LANGUAGE_NAME_Perl}"   ];then run_Perl   < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_Perl}.txt  ; fi
-    if [ "${in_lang}" = "${LANGUAGE_NAME_Python}" ];then run_Python < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_Python}.txt; fi
-    if [ "${in_lang}" = "${LANGUAGE_NAME_Java}"   ];then run_Java   < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_Java}.txt  ; fi
-    if [ "${in_lang}" = "${LANGUAGE_NAME_CS}"     ];then run_CS     < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_CS}.txt    ; fi
-    if [ "${in_lang}" = "${LANGUAGE_NAME_JS}"     ];then run_JS     < ${input_file} | tee ${output_prefix}_${LANGUAGE_EX_JS}.txt    ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_C}"      ];then run_C      ${output_prefix}_${LANGUAGE_EX_C}.txt      < ${input_file} ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_CPP}"    ];then run_CPP    ${output_prefix}_${LANGUAGE_EX_CPP}.txt    < ${input_file} ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_D}"      ];then run_D      ${output_prefix}_${LANGUAGE_EX_D}.txt      < ${input_file} ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_Ruby}"   ];then run_Ruby   ${output_prefix}_${LANGUAGE_EX_Ruby}.txt   < ${input_file} ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_Perl}"   ];then run_Perl   ${output_prefix}_${LANGUAGE_EX_Perl}.txt   < ${input_file} ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_Python}" ];then run_Python ${output_prefix}_${LANGUAGE_EX_Python}.txt < ${input_file} ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_Java}"   ];then run_Java   ${output_prefix}_${LANGUAGE_EX_Java}.txt   < ${input_file} ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_CS}"     ];then run_CS     ${output_prefix}_${LANGUAGE_EX_CS}.txt     < ${input_file} ; fi
+    if [ "${in_lang}" = "${LANGUAGE_NAME_JS}"     ];then run_JS     ${output_prefix}_${LANGUAGE_EX_JS}.txt     < ${input_file} ; fi
 done
 
 popd
