@@ -11,7 +11,7 @@ TEST_DATA_DIR=test_data
 RESULT_DATA_DIR=result_data
 
 # テストデータ取得
-mkdir ${TEST_DATA_DIR} -p
+mkdir ${TEST_DATA_DIR} ${RESULT_DATA_DIR} -p
 for num in {1..100}
 do
     pre_num=$((num - 1))
@@ -36,16 +36,35 @@ do
     if [[ ${pre_num} != 0 ]];then
         result=$(diff ${TEST_DATA_DIR}/${Q_NAME}_${num}_in.txt ${TEST_DATA_DIR}/${Q_NAME}_${pre_num}_in.txt)
         if [ "${result}" = "" ];then
-            grep "<html>" ${TEST_DATA_DIR}/${Q_NAME}_${num}_in.txt >& /dev/null
-            grep "<html>" ${TEST_DATA_DIR}/${Q_NAME}_${num}_out.txt >& /dev/null
+            rm ${TEST_DATA_DIR}/${Q_NAME}_${num}_in.txt
+            rm ${TEST_DATA_DIR}/${Q_NAME}_${num}_out.txt
             break
         fi
     fi
 
-    # プログラム実行
-    ${SCRIPT_DIR}/run_AOJ.sh -i ${TEST_DATA_DIR}/${Q_NAME}_${num}_in.txt -o ${RESULT_DATA_DIR}/${Q_NAME}_${num}_out ${DIR_NAME}
+    # プログラム実行と差分確認
+    echo "[START] ${Q_NAME} ${TEST_DATA_DIR}/${Q_NAME}_${num}_in.txt"
+    ${SCRIPT_DIR}/run_AOJ.sh -i ${TEST_DATA_DIR}/${Q_NAME}_${num}_in.txt -o ${RESULT_DATA_DIR}/${Q_NAME}_${num}_out ${DIR_NAME} >& /dev/null
+    for result_file in ${RESULT_DATA_DIR}/${Q_NAME}_${num}_out_*.txt
+    do
+        result=$(diff ${result_file} ${TEST_DATA_DIR}/${Q_NAME}_${num}_out.txt)
+        if [ "${result}" = "" ];then
+            echo -n "."
+        else
+            echo -n "F"
+        fi
+    done
+    echo
+    echo "[END]"
+
+    # 差分表示
+    for result_file in ${RESULT_DATA_DIR}/${Q_NAME}_${num}_out_*.txt
+    do
+        result=$(diff ${result_file} ${TEST_DATA_DIR}/${Q_NAME}_${num}_out.txt)
+        if [ "${result}" != "" ];then
+            echo "[NG] diff ${result_file} ${TEST_DATA_DIR}/${Q_NAME}_${num}_out.txt"
+            echo "${result}"
+        fi
+    done
 done
 
-# テストデータ削除
-#rm data/*
-### 以下作成中
