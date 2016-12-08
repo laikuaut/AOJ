@@ -34,4 +34,5 @@
 # data
 data/
 result_data/
-test_data
+test_data/
+log/
