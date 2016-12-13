@@ -89,5 +89,5 @@ done
 
 for log_file in ${LOG_DIR}/*.log
 do
-    cat ${log_file}
+    cat ${log_file} 1>&2
 done
